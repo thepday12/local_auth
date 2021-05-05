@@ -1,66 +1,175 @@
-# Flutter plugins
+# local_auth
 
-[![Build Status](https://api.cirrus-ci.com/github/flutter/plugins.svg)](https://cirrus-ci.com/github/flutter/plugins/master)
+This Flutter plugin provides means to perform local, on-device authentication of
+the user.
 
-This repo is a companion repo to the main [flutter
-repo](https://github.com/flutter/flutter). It contains the source code for
-Flutter first-party plugins (i.e., plugins developed by the core Flutter team).
-Check the `packages` directory for all plugins.
+This means referring to biometric authentication on iOS (Touch ID or lock code)
+and the fingerprint APIs on Android (introduced in Android 6.0).
 
-Flutter plugins enable access to platform-specific APIs. For more information
-about plugins, and how to use them, see
-[https://flutter.dev/platform-plugins/](https://flutter.dev/platform-plugins/).
+## Usage in Dart
 
-These plugins are also available on
-[pub](https://pub.dev/flutter/packages).
+Import the relevant file:
 
-## Issues
+```dart
+import 'package:local_auth/local_auth.dart';
+```
 
-Please file any issues, bugs, or feature requests in the [main flutter
-repo](https://github.com/flutter/flutter/issues/new).
+To check whether there is local authentication available on this device or not, call canCheckBiometrics:
 
-## Contributing
+```dart
+bool canCheckBiometrics =
+    await localAuth.canCheckBiometrics;
+```
 
-If you wish to contribute a new plugin to the Flutter ecosystem, please
-see the documentation for [developing packages](https://flutter.dev/developing-packages/) and
-[platform channels](https://flutter.dev/platform-channels/). You can store
-your plugin source code in any GitHub repository (the present repo is only
-intended for plugins developed by the core Flutter team). Once your plugin
-is ready you can [publish](https://flutter.dev/developing-packages/#publish)
-to the [pub repository](https://pub.dev/).
+Currently the following biometric types are implemented:
 
-If you wish to contribute a change to any of the existing plugins in this repo,
-please review our [contribution guide](https://github.com/flutter/plugins/blob/master/CONTRIBUTING.md),
-and send a [pull request](https://github.com/flutter/plugins/pulls).
+* BiometricType.face
+* BiometricType.fingerprint
 
-## Plugins
-These are the available plugins in this repository.
+To get a list of enrolled biometrics, call getAvailableBiometrics:
 
-| Plugin | Pub | Points | Popularity | Likes |
-|--------|-----|--------|------------|-------|
-| [android_alarm_manager](./packages/android_alarm_manager/) | [![pub package](https://img.shields.io/pub/v/android_alarm_manager.svg)](https://pub.dev/packages/android_alarm_manager) | [![pub points](https://badges.bar/android_alarm_manager/pub%20points)](https://pub.dev/packages/android_alarm_manager/score) |  [![popularity](https://badges.bar/android_alarm_manager/popularity)](https://pub.dev/packages/android_alarm_manager/score) | [![likes](https://badges.bar/android_alarm_manager/likes)](https://pub.dev/packages/android_alarm_manager/score) |
-| [android_intent](./packages/android_intent/) | [![pub package](https://img.shields.io/pub/v/android_intent.svg)](https://pub.dev/packages/android_intent) | [![pub points](https://badges.bar/android_intent/pub%20points)](https://pub.dev/packages/android_intent/score) | [![popularity](https://badges.bar/android_intent/popularity)](https://pub.dev/packages/android_intent/score) | [![likes](https://badges.bar/android_intent/likes)](https://pub.dev/packages/android_intent/score) |
-| [battery](./packages/battery/) | [![pub package](https://img.shields.io/pub/v/battery.svg)](https://pub.dev/packages/battery) | [![pub points](https://badges.bar/battery/pub%20points)](https://pub.dev/packages/battery/score) | [![popularity](https://badges.bar/battery/popularity)](https://pub.dev/packages/battery/score) | [![likes](https://badges.bar/battery/likes)](https://pub.dev/packages/battery/score) |
-| [camera](./packages/camera/) | [![pub package](https://img.shields.io/pub/v/camera.svg)](https://pub.dev/packages/camera) | [![pub points](https://badges.bar/camera/pub%20points)](https://pub.dev/packages/camera/score) | [![popularity](https://badges.bar/camera/popularity)](https://pub.dev/packages/camera/score) | [![likes](https://badges.bar/camera/likes)](https://pub.dev/packages/camera/score) |
-| [connectivity](./packages/connectivity/) | [![pub package](https://img.shields.io/pub/v/connectivity.svg)](https://pub.dev/packages/connectivity) | [![pub points](https://badges.bar/connectivity/pub%20points)](https://pub.dev/packages/connectivity/score) | [![popularity](https://badges.bar/connectivity/popularity)](https://pub.dev/packages/connectivity/score) | [![likes](https://badges.bar/connectivity/likes)](https://pub.dev/packages/connectivity/score) |
-| [device_info](./packages/device_info/) | [![pub package](https://img.shields.io/pub/v/device_info.svg)](https://pub.dev/packages/device_info) | [![pub points](https://badges.bar/device_info/pub%20points)](https://pub.dev/packages/device_info/score) | [![popularity](https://badges.bar/device_info/popularity)](https://pub.dev/packages/device_info/score) | [![likes](https://badges.bar/device_info/likes)](https://pub.dev/packages/device_info/score) |
-| [e2e (Discontinued, use integration_test)](./packages/e2e/) | [![pub package](https://img.shields.io/pub/v/e2e.svg)](https://pub.dev/packages/e2e) | [![pub points](https://badges.bar/e2e/pub%20points)](https://pub.dev/packages/e2e/score) | [![popularity](https://badges.bar/e2e/popularity)](https://pub.dev/packages/e2e/score) | [![likes](https://badges.bar/e2e/likes)](https://pub.dev/packages/e2e/score) |
-| [espresso](./packages/espresso/) | [![pub package](https://img.shields.io/pub/v/espresso.svg)](https://pub.dev/packages/espresso) | [![pub points](https://badges.bar/espresso/pub%20points)](https://pub.dev/packages/espresso/score) | [![popularity](https://badges.bar/espresso/popularity)](https://pub.dev/packages/espresso/score) | [![likes](https://badges.bar/espresso/likes)](https://pub.dev/packages/espresso/score) |
-| [flutter_plugin_android_lifecycle](./packages/flutter_plugin_android_lifecycle/) | [![pub package](https://img.shields.io/pub/v/flutter_plugin_android_lifecycle.svg)](https://pub.dev/packages/flutter_plugin_android_lifecycle) | [![pub points](https://badges.bar/flutter_plugin_android_lifecycle/pub%20points)](https://pub.dev/packages/flutter_plugin_android_lifecycle/score) | [![popularity](https://badges.bar/flutter_plugin_android_lifecycle/popularity)](https://pub.dev/packages/flutter_plugin_android_lifecycle/score) | [![likes](https://badges.bar/flutter_plugin_android_lifecycle/likes)](https://pub.dev/packages/flutter_plugin_android_lifecycle/score) |
-| [google_maps_flutter](./packages/google_maps_flutter) | [![pub package](https://img.shields.io/pub/v/google_maps_flutter.svg)](https://pub.dev/packages/google_maps_flutter) | [![pub points](https://badges.bar/google_maps_flutter/pub%20points)](https://pub.dev/packages/google_maps_flutter/score) | [![popularity](https://badges.bar/google_maps_flutter/popularity)](https://pub.dev/packages/google_maps_flutter/score) | [![likes](https://badges.bar/google_maps_flutter/likes)](https://pub.dev/packages/google_maps_flutter/score) |
-| [google_sign_in](./packages/google_sign_in/) | [![pub package](https://img.shields.io/pub/v/google_sign_in.svg)](https://pub.dev/packages/google_sign_in) | [![pub points](https://badges.bar/google_sign_in/pub%20points)](https://pub.dev/packages/google_sign_in/score) | [![popularity](https://badges.bar/google_sign_in/popularity)](https://pub.dev/packages/google_sign_in/score) | [![likes](https://badges.bar/google_sign_in/likes)](https://pub.dev/packages/google_sign_in/score) |
-| [image_picker](./packages/image_picker/) | [![pub package](https://img.shields.io/pub/v/image_picker.svg)](https://pub.dev/packages/image_picker) | [![pub points](https://badges.bar/image_picker/pub%20points)](https://pub.dev/packages/image_picker/score) | [![popularity](https://badges.bar/image_picker/popularity)](https://pub.dev/packages/image_picker/score) | [![likes](https://badges.bar/image_picker/likes)](https://pub.dev/packages/image_picker/score) |
-| [integration_test](./packages/integration_test/) | [![pub package](https://img.shields.io/pub/v/integration_test.svg)](https://pub.dev/packages/integration_test) | [![pub points](https://badges.bar/integration_test/pub%20points)](https://pub.dev/packages/integration_test/score) | [![popularity](https://badges.bar/integration_test/popularity)](https://pub.dev/packages/integration_test/score) | [![likes](https://badges.bar/integration_test/likes)](https://pub.dev/packages/integration_test/score) |
-| [in_app_purchase](./packages/in_app_purchase/) | [![pub package](https://img.shields.io/pub/v/in_app_purchase.svg)](https://pub.dev/packages/in_app_purchase) | [![pub points](https://badges.bar/in_app_purchase/pub%20points)](https://pub.dev/packages/in_app_purchase/score) | [![popularity](https://badges.bar/in_app_purchase/popularity)](https://pub.dev/packages/in_app_purchase/score) | [![likes](https://badges.bar/in_app_purchase/likes)](https://pub.dev/packages/in_app_purchase/score) |
-| [ios_platform_images](./packages/ios_platform_images/) | [![pub package](https://img.shields.io/pub/v/ios_platform_images.svg)](https://pub.dev/packages/ios_platform_images) | [![pub points](https://badges.bar/ios_platform_images/pub%20points)](https://pub.dev/packages/ios_platform_images/score) | [![popularity](https://badges.bar/ios_platform_images/popularity)](https://pub.dev/packages/ios_platform_images/score) | [![likes](https://badges.bar/ios_platform_images/likes)](https://pub.dev/packages/ios_platform_images/score) |
-| [local_auth](./packages/local_auth/) | [![pub package](https://img.shields.io/pub/v/local_auth.svg)](https://pub.dev/packages/local_auth) | [![pub points](https://badges.bar/local_auth/pub%20points)](https://pub.dev/packages/local_auth/score) | [![popularity](https://badges.bar/local_auth/popularity)](https://pub.dev/packages/local_auth/score) | [![likes](https://badges.bar/local_auth/likes)](https://pub.dev/packages/local_auth/score) |
-| [package_info](./packages/package_info/) | [![pub package](https://img.shields.io/pub/v/package_info.svg)](https://pub.dev/packages/package_info) | [![pub points](https://badges.bar/package_info/pub%20points)](https://pub.dev/packages/package_info/score) | [![popularity](https://badges.bar/package_info/popularity)](https://pub.dev/packages/package_info/score) | [![likes](https://badges.bar/package_info/likes)](https://pub.dev/packages/package_info/score) |
-| [path_provider](./packages/path_provider/) | [![pub package](https://img.shields.io/pub/v/path_provider.svg)](https://pub.dev/packages/path_provider) | [![pub points](https://badges.bar/path_provider/pub%20points)](https://pub.dev/packages/path_provider/score) | [![popularity](https://badges.bar/path_provider/popularity)](https://pub.dev/packages/path_provider/score) | [![likes](https://badges.bar/path_provider/likes)](https://pub.dev/packages/path_provider/score) |
-| [plugin_platform_interface](./packages/plugin_platform_interface/) | [![pub package](https://img.shields.io/pub/v/plugin_platform_interface.svg)](https://pub.dev/packages/plugin_platform_interface) | [![pub points](https://badges.bar/plugin_platform_interface/pub%20points)](https://pub.dev/packages/plugin_platform_interface/score) | [![popularity](https://badges.bar/plugin_platform_interface/popularity)](https://pub.dev/packages/plugin_platform_interface/score) | [![likes](https://badges.bar/plugin_platform_interface/likes)](https://pub.dev/packages/plugin_platform_interface/score) |
-| [quick_actions](./packages/quick_actions/) | [![pub package](https://img.shields.io/pub/v/quick_actions.svg)](https://pub.dev/packages/quick_actions) | [![pub points](https://badges.bar/quick_actions/pub%20points)](https://pub.dev/packages/quick_actions/score) | [![popularity](https://badges.bar/quick_actions/popularity)](https://pub.dev/packages/quick_actions/score) | [![likes](https://badges.bar/quick_actions/likes)](https://pub.dev/packages/quick_actions/score) |
-| [sensors](./packages/sensors/) | [![pub package](https://img.shields.io/pub/v/sensors.svg)](https://pub.dev/packages/sensors) | [![pub points](https://badges.bar/sensors/pub%20points)](https://pub.dev/packages/sensors/score) | [![popularity](https://badges.bar/sensors/popularity)](https://pub.dev/packages/sensors/score) | [![likes](https://badges.bar/sensors/likes)](https://pub.dev/packages/sensors/score) |
-| [share](./packages/share/) | [![pub package](https://img.shields.io/pub/v/share.svg)](https://pub.dev/packages/share) | [![pub points](https://badges.bar/share/pub%20points)](https://pub.dev/packages/share/score) | [![popularity](https://badges.bar/share/popularity)](https://pub.dev/packages/share/score) | [![likes](https://badges.bar/share/likes)](https://pub.dev/packages/share/score) |
-| [shared_preferences](./packages/shared_preferences/) | [![pub package](https://img.shields.io/pub/v/shared_preferences.svg)](https://pub.dev/packages/shared_preferences) | [![pub points](https://badges.bar/shared_preferences/pub%20points)](https://pub.dev/packages/shared_preferences/score) | [![popularity](https://badges.bar/shared_preferences/popularity)](https://pub.dev/packages/shared_preferences/score) | [![likes](https://badges.bar/shared_preferences/likes)](https://pub.dev/packages/shared_preferences/score) |
-| [url_launcher](./packages/url_launcher/) | [![pub package](https://img.shields.io/pub/v/url_launcher.svg)](https://pub.dev/packages/url_launcher) | [![pub points](https://badges.bar/url_launcher/pub%20points)](https://pub.dev/packages/url_launcher/score) | [![popularity](https://badges.bar/url_launcher/popularity)](https://pub.dev/packages/url_launcher/score) | [![likes](https://badges.bar/url_launcher/likes)](https://pub.dev/packages/url_launcher/score) |
-| [video_player](./packages/video_player/) | [![pub package](https://img.shields.io/pub/v/video_player.svg)](https://pub.dev/packages/video_player) | [![pub points](https://badges.bar/video_player/pub%20points)](https://pub.dev/packages/video_player/score) | [![popularity](https://badges.bar/video_player/popularity)](https://pub.dev/packages/video_player/score) | [![likes](https://badges.bar/video_player/likes)](https://pub.dev/packages/video_player/score) |
-| [webview_flutter](./packages/webview_flutter/) | [![pub package](https://img.shields.io/pub/v/webview_flutter.svg)](https://pub.dev/packages/webview_flutter) | [![pub points](https://badges.bar/webview_flutter/pub%20points)](https://pub.dev/packages/webview_flutter/score) | [![popularity](https://badges.bar/webview_flutter/popularity)](https://pub.dev/packages/webview_flutter/score) | [![likes](https://badges.bar/webview_flutter/likes)](https://pub.dev/packages/webview_flutter/score) |
+```dart
+List<BiometricType> availableBiometrics =
+    await auth.getAvailableBiometrics();
+
+if (Platform.isIOS) {
+    if (availableBiometrics.contains(BiometricType.face)) {
+        // Face ID.
+    } else if (availableBiometrics.contains(BiometricType.fingerprint)) {
+        // Touch ID.
+    }
+}
+```
+
+We have default dialogs with an 'OK' button to show authentication error
+messages for the following 2 cases:
+
+1.  Passcode/PIN/Pattern Not Set. The user has not yet configured a passcode on
+    iOS or PIN/pattern on Android.
+2.  Touch ID/Fingerprint Not Enrolled. The user has not enrolled any
+    fingerprints on the device.
+
+Which means, if there's no fingerprint on the user's device, a dialog with
+instructions will pop up to let the user set up fingerprint. If the user clicks
+'OK' button, it will return 'false'.
+
+Use the exported APIs to trigger local authentication with default dialogs:
+
+```dart
+var localAuth = LocalAuthentication();
+bool didAuthenticate =
+    await localAuth.authenticateWithBiometrics(
+        localizedReason: 'Please authenticate to show account balance');
+```
+
+If you don't want to use the default dialogs, call this API with
+'useErrorDialogs = false'. In this case, it will throw the error message back
+and you need to handle them in your dart code:
+
+```dart
+bool didAuthenticate =
+    await localAuth.authenticateWithBiometrics(
+        localizedReason: 'Please authenticate to show account balance',
+        useErrorDialogs: false);
+```
+
+You can use our default dialog messages, or you can use your own messages by
+passing in IOSAuthMessages and AndroidAuthMessages:
+
+```dart
+import 'package:local_auth/auth_strings.dart';
+
+const iosStrings = const IOSAuthMessages(
+    cancelButton: 'cancel',
+    goToSettingsButton: 'settings',
+    goToSettingsDescription: 'Please set up your Touch ID.',
+    lockOut: 'Please reenable your Touch ID');
+await localAuth.authenticateWithBiometrics(
+    localizedReason: 'Please authenticate to show account balance',
+    useErrorDialogs: false,
+    iOSAuthStrings: iosStrings);
+
+```
+
+If needed, you can manually stop authentication for android:
+
+```dart
+
+void _cancelAuthentication() {
+    localAuth.stopAuthentication();
+}
+
+```
+
+### Exceptions
+
+There are 6 types of exceptions: PasscodeNotSet, NotEnrolled, NotAvailable, OtherOperatingSystem, LockedOut and PermanentlyLockedOut.
+They are wrapped in LocalAuthenticationError class. You can
+catch the exception and handle them by different types. For example:
+
+```dart
+import 'package:flutter/services.dart';
+import 'package:local_auth/error_codes.dart' as auth_error;
+
+try {
+  bool didAuthenticate = await local_auth.authenticateWithBiometrics(
+      localizedReason: 'Please authenticate to show account balance');
+} on PlatformException catch (e) {
+  if (e.code == auth_error.notAvailable) {
+    // Handle this exception here.
+  }
+}
+```
+
+## iOS Integration
+
+Note that this plugin works with both TouchID and FaceID. However, to use the latter,
+you need to also add:
+
+```xml
+<key>NSFaceIDUsageDescription</key>
+<string>Why is my app authenticating using face id?</string>
+```
+
+to your Info.plist file. Failure to do so results in a dialog that tells the user your
+app has not been updated to use TouchID.
+
+
+## Android Integration
+
+Note that local_auth plugin requires the use of a FragmentActivity as
+opposed to Activity. This can be easily done by switching to use
+`FlutterFragmentActivity` as opposed to `FlutterActivity` in your
+manifest (or your own Activity class if you are extending the base class).
+
+Update your project's `AndroidManifest.xml` file to include the
+`USE_FINGERPRINT` permissions:
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.app">
+  <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+<manifest>
+```
+
+On Android, you can check only for existence of fingerprint hardware prior
+to API 29 (Android Q). Therefore, if you would like to support other biometrics
+types (such as face scanning) and you want to support SDKs lower than Q,
+*do not* call `getAvailableBiometrics`. Simply call `authenticateWithBiometrics`.
+This will return an error if there was no hardware available.
+
+## Sticky Auth
+
+You can set the `stickyAuth` option on the plugin to true so that plugin does not
+return failure if the app is put to background by the system. This might happen
+if the user receives a phone call before they get a chance to authenticate. With
+`stickyAuth` set to false, this would result in plugin returning failure result
+to the Dart app. If set to true, the plugin will retry authenticating when the
+app resumes.
+
+## Getting Started
+
+For help getting started with Flutter, view our online
+[documentation](http://flutter.io/).
+
+For help on editing plugin code, view the [documentation](https://flutter.io/platform-plugins/#edit-code).
